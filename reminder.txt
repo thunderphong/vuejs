@@ -1,4 +1,54 @@
-COMPUTED VS METHODS:
-- Methods rerun mỗi khi DOM mà nó quản lý có sự thay đổi (vì nó phải kiểm tra xem những biến bên trong nó có bị thay đổi không)
-- Computed không rerun mỗi khi DOM thay đổi. Nó chỉ run khi những thuộc tính có bên trong nó có sự thay đổi
+CHƯƠNG 1: BẮT ĐẦU
+- Vue dung lượng nhỏ => nhanh
+- Có discord để hỏi bài: https://discord.com/channels/622033978047725582/633585681465344001
+- new Vue (el, data, methods): control 1 element
+- This: access hết trong data và methods
+- Cấu trúc bài giảng
+- Khai thác tài nguyên, bài tập ở đâu, có bao nhiều bài tập
+- Cài đặt offline vuejs
+
+CHƯƠNG 2: GIAO TIẾP VỚI DOM
+- template vuejs hoạt động: copy dom đã được đánh dấu xuống thành 1 vue instance,
+    biến đổi instance đó, đẩy lên lại dom
+- template syntax và vue instance: ta không cần .this .data để trên template để 
+    truy cập vào vue instance khi muốn truy cập vào data hay methods.
+- Truy cập vào dữ liệu của chính instance: khi methods cần dữ liệu từ data, 
+    chỉ cần call this.dữ liệu.
+- v-bind:href="link" : (:) dùng để truyền giá trị từ vue instance vào 1 attribute.
+    Chỉ cần truyền bình thường như truyền vào text: {{ link }}
+- directive: chỉ thị cho 1 attribute
+- <v-once> Khi một {{}} hay 1 v-bind bị render nhiều hơn 1 lần, nếu ta muốn ngăn chặn việc
+    render nhiều hơn 1 lần, sử dụng v-once
+- v-html="finishedLink": output raw html như một attribute qua 1 div hoặc p
+- Link download tất cả các code và bài tập
+- Bài tập 1
+- v-on:click="increase": ngược với v-bind, v-on (@) lấy thông tin event từ element
+    sau đó gán/sửa/thay đổi dữ liệu bên trong data, methods,..
+- v-on:mouseover="changeCoordinate> {{x}} / {{y}}: sử dụng được thông qua biến 
+    event được truyền tự động qua mỗi method trong methods
+- v-on:click="increase(2, $event)": truyền đối số vào hàm sử dụng dấu ngoặc đơn,
+    nếu cần sử dụng biến event thì phải khai báo có dấu $ để vue ngầm hiểu
+- v-on:mousemove.stop: .stop được gọi là event modifier, nó điều chỉnh sự kiện
+    đứng trước một directive. phổ biến là stop(stop propagation) và prevent(default)
+- @keyup.enter="alertMe": key modifier, tức là khi thực hiện sự kiện phía trước
+    dấu . bằng phím được chain sau dấu chấm, sẽ trigger function phía sau
+- Với các trường được control bởi vue như {{  }}, function phía sau v-on, ở đó có
+    thể viết được một số code js đơn giản (k if, k loop, 1 biến, binary if). 
+    => tăng sự liên kết của html và js
+- v-model="name": ràng buộc 2 chiều với data là name. Với element đặt ràng buộc 2
+    chiều với name, nó sẽ vừa thực hiện việc của {{ }} là hiển thị name lên element,
+    vừa thay đổi name khi thay đổi giá trị bên trong nó. Như một hậu quả, các 
+    element khác bị binding bởi name cũng sẽ thay đổi giá trị.
+- COMPUTED VS METHODS:
+    + Methods rerun mỗi khi DOM mà nó quản lý có sự thay đổi 
+        (vì nó phải kiểm tra xem những biến bên trong nó có bị thay đổi không)
+        => không cần dấu () khi ở trong {{}}, tức là sử dụng như biến data
+    + Computed không rerun mỗi khi DOM thay đổi. 
+        Nó chỉ run khi những thuộc tính có bên trong nó có sự thay đổi
+        => cần có dấu () khi ở trong {{}}
+- {{ me() }}methods cần phải có dấu () khi ở bên trong {{}}. Khi được chỉ định ở
+    v-on thì không cần phải có dấu (), mặc dù có cũng k sao
+- watch: { counter: function(value){async code} }: watch là 1 property của Vue 
+    dùng để thực hiện những tác vụ async KHI VÀ CHỈ KHI biến bên trong data được
+    chỉ định (counter) bị thay đổi
 
