@@ -1,0 +1,4 @@
+COMPUTED VS METHODS:
+- Methods rerun mỗi khi DOM mà nó quản lý có sự thay đổi (vì nó phải kiểm tra xem những biến bên trong nó có bị thay đổi không)
+- Computed không rerun mỗi khi DOM thay đổi. Nó chỉ run khi những thuộc tính có bên trong nó có sự thay đổi
+
