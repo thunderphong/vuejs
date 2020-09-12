@@ -102,4 +102,11 @@ CHƯƠNG 3: CÂU ĐIỀU KIỆN VÀ DANH SÁCH
 => Đã học gì? v-if, v-show, v-for
 
 CHƯƠNG 4: PROJECT ĐẦU
+CHƯƠNG 5: VUE INSTANCE
+- Có thể có nhiều vue instance
+- vm1.title: Có thể truy cập vue instance từ bên ngoài code bt hoặc 1 instance khác.
+- vm1.newProp = 'New!': Sự quan trọng của việc lưu giữ giá trị bên trong vue instance 
+    và sự khác biệt khi add property bên ngoài instance. 
+- ta có thể tạo 1 data value bên ngoài và gán nó vào 1 data property bên trong.
+    Hoàn toàn hợp lệ. 
 - 
