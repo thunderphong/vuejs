@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workplace</title>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <div id="app">
+        <ul> <li v-for="(ins, i) in ingredients" :key="ins"> {{ ins }} ({{ i }}) </li> </ul>
+        <hr>
+        <button @click="ingredients.push('spices')">Add New</button>
+        <hr>
+        <ul>
+            <li v-for="(name) in persons">
+                <span v-for="(value, key) in name">{{key}} - {{value}}, </span>
+            </li>
+        </ul>
+        <hr>
+        <template v-for="(ins, i) in ingredients">
+            <h1>{{ ins }}</h1>
+            <p>{{ i }}</p>
+        </template>
+        <hr>
+        <span v-for="i in 10"> {{ i }} </span>
+    </div>
+    
+    <script>
+        new Vue({
+            el: '#app',
+            data: {
+                ingredients: ['meat', 'fruit', 'cookie'],
+                persons: [
+                    {name: 'Max', age: 27, color: 'red'},
+                    {name: 'Anna', age: 'unknown', color: 'blue'}
+                ]
+            }
+        })
+    </script>
+    
+</body>
+</html>

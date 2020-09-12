@@ -51,4 +51,55 @@ CHƯƠNG 2: GIAO TIẾP VỚI DOM
 - watch: { counter: function(value){async code} }: watch là 1 property của Vue 
     dùng để thực hiện những tác vụ async KHI VÀ CHỈ KHI biến bên trong data được
     chỉ định (counter) bị thay đổi
+- Bài tập: watch có thể theo dõi được cả Computed, do Computed được treat như 1 
+    biến data 
+- @click:"attachRed = !attachRed", :class="{red:attachRed}": dynamic styling các 
+    class css của element: :class="{key: true/false}". Ý nghĩa: khi click vào 
+    khu vực được control, directive @click sẽ thay đổi giá trị của biến attachRed 
+    từ false -> true và ngược lại, từ đó directive :class sẽ lấy giá trị đó 
+    mà gán vào key để thể hiện key này có được thêsm vào class hay không. 
+    :class="{key:true/false}" là syntax của binding cho class
+- Thay đổi linh động code class binding: đưa từ code html ở trên xuống code Computed
+    js ở dưới
+- Một cách khách để dynamic styling các class css của element là sử dụng 
+    v-model="color" và cú pháp trực tiếp :class="color" để lấy giá trị từ v-model
+    và gán thẳng vào :class
+- Thay vì dynamic styling các class, ta có thể styling chính style của element,
+    có cùng 1 cách để làm (v-model) :style="{backgroundColor: color}", v-model:...
+    Chú ý là tên key bên trong object phải là camel case, hoặc nằm trong dấu ''.
+- Cả 2 styling style và class đều có thể sử dụng phương pháp styling nâng cao là
+    with array syntax: :style="[myStyle, {height: width + 'px'}]
+=> đã học được gì? syntax Vue instance, template {{}}, directive, event modifier, 
+    Computed vs method, dynamic styling class/style, 
 
+CHƯƠNG 3: CÂU ĐIỀU KIỆN VÀ DANH SÁCH
+- v-if="true/false": attach/detach element và các element con bên trong nó. Có thể sử 
+    dụng v-else ngay bên dưới nó mà không cần khai báo gì khác, vue vẫn hiểu.
+- Có cả v-else-if.
+- vì v-if chỉ có tác dụng trên 1 element và con, ta có thể wrap các element đồng
+    cấp vào trong 1 tag html là template. Template không xuất hiện trên dom như
+    div hay p.
+- v-show="true/false" có hiệu ứng hình ảnh tương tự như v-if, nhưng nó k gỡ bỏ 
+    element trong dom, mà chỉ đơn giản display none element. V-show không hỗ trợ
+    tag template
+- <li v-for="i in array"> {{ i }}</li> được sử dụng như vòng lặp for, biến i có thể
+    được truy xuất tại bất cứ đâu, như biến trong data.
+- li v-for="(ins, i) in ingredients"> {{ ins }} ({{ i }}) </li>: ta có thể truy xuất
+    chỉ số của ins trong mảng bằng cách thêm vào v-for 1 param thứ 2. Thứ tự xuất 
+    hiện quan trọng.
+- <template v-for="(ins, i) in ingredients"> sử dụng template v-for để sử dụng loop
+    bên trong các tag không lồng nhau như <h1></h1> rồi <p></p>, tức là ins 1 chỗ
+    i 1 chỗ
+- <span v-for="(value, key) in name">{{key}} - {{value}}, </span> tương tự như loop
+    through array, v-for còn có thể loop qua object như hình, với sự khác biệt khi
+    đặt param bên trong là thứ tự của các param: (value, key, index);
+- Ta cũng có thể đặt v-for bên trong 1 v-for khác để lặp một object array.
+- <span v-for="i in 10"> {{ i }} </span>: nếu chỉ cần lặp 1 vòng lặp for đơn giản
+    từ 1 - 10, ta sử dụng cú pháp trên
+- <li v-for="(ins, i) in ingredients" :key="ins"> Khi ta thay đổi nội dung nội dung
+    của 1 phần tử trong array lẫn thứ tự các phần tử của array đó, ta nên sử dụng
+    :key="ins", ins phải là unique trong cả file
+=> Đã học gì? v-if, v-show, v-for
+
+CHƯƠNG 4: PROJECT ĐẦU
+- 
