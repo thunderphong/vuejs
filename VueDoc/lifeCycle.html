@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Workplace</title>
+</head>
+<body>
+    <script src="https://npmcdn.com/vue/dist/vue.js"></script>
+
+    <div id="app1">
+        <h1>{{ title }}</h1>
+        <button @click="change">Change</button>
+        <button @click="destroy">Destroyyy</button>
+    </div>
+    
+    <script>
+        const vm1 = new Vue({
+            el: '#app1',
+            data: {
+                title: 'Auth!'
+            },
+            beforeCreated: function(){
+                console.log('beforesssss');
+            },
+            created: function(){
+                console.log('2');
+            },
+            beforeMount: function(){
+                console.log('3');
+            },
+            mounted: function(){
+                console.log('4');
+            },
+            beforeUpdate: function(){
+                console.log('5');
+            },
+            updated: function(){
+                console.log('6');
+            },
+            beforeDestroy: function(){
+                console.log('7');
+            },
+            destroyed: function(){
+                console.log('8');
+            },
+            methods: {
+                change: function(){
+                    this.title = 'fake!';
+                },
+                destroy: function(){
+                    this.$destroy();
+                }
+            }
+        });
+    </script>
+    
+</body>
+</html>

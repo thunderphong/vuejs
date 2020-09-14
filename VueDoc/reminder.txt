@@ -109,4 +109,36 @@ CHƯƠNG 5: VUE INSTANCE
     và sự khác biệt khi add property bên ngoài instance. 
 - ta có thể tạo 1 data value bên ngoài và gán nó vào 1 data property bên trong.
     Hoàn toàn hợp lệ. 
+- this.$ref.'tên gán'.innerText / vm1.$ref.'tên gán'.innerText: là thứ ta có thể 
+    truy cập vào nội dụng của một tag đã được gán thẻ ref.
+- https://vi.vuejs.org/v2/api/: api
+- vm1.$mount('#app1') = new Vue({el: '#app1'}), chỉ khác là trong và ngoài
+- Một cách khác để giải thích cách vue instance hoạt động: vm3.$mount();
+    document.getElementById('app3').appendChild(vm3.$el);
+- Component đơn giản là một cách để tạo template và dùng nó ở nhiều nơi, khác với
+    vue instance là chỉ có thể control 1 element
+- Hạn chế vl khi dùng template, dù là el template hay tag template.
+- VueJS update dom ntn: Nó copy 2 lần dom template đang control. template (1) dùng 
+    để chỉnh sửa mọi thứ mà người dùng là, template 2 (virtual DOM) dùng để so sánh
+    với template (1): cái nào đã được chỉnh sửa. Ghi nhận các chỉnh sử đó và đưa lên
+    dom thật, chứ không phải render hết các dom chỉnh sửa và dom không đụng đến
+- Vòng đời của VueJS instance: new Vue -> beforeCreated() -> created() -> 
+    beforeMount() -> mounted() -> (1) beforeUpdate() -> updated() <=> / (2)
+    beforeDestroy() -> destroyed().
+    Giải thích: với các hàm này, ta có thể thêm code vào các giai đoạn khi Vue thực
+    thi. CÁC HÀM NÀY CHƯA ĐƯỢC ĐỊNH NGHĨA @@.
+        1. Khởi tạo vòng đời, sự kiện -> beforeCreated()
+        2. Khởi tạo data và event (methods, computed), tạo ra instance -> created()
+        3. Tìm el/template -> Biên dịch template đã có / Biên dịch outerHTML của el 
+            (gán giá trị của data vào instance, thêm directive) -> beforeMount()
+        4. Tạo vm.$el (?) và thay thế cho el -> mounted()
+        5. Thay thế instance lên dom -> beforeUpdate()
+        6. (điều kiện dom phải thay đổi) Virtual Dom và render lại -> updated()
+        7. (điều kiện vm.destroy() được gọi) -> beforeDestroy()
+        8. Tháo dỡ các watcher, eventListener, code,... -> destroyed().
+CHƯƠNG 6: DEVELOPMENT WORKFLOW
+- Development server @@@@@@@
+- npm install -g @vue/cli -> vue  create test
+- Cấu trúc của 1 vue project, 
+CHƯƠNG 7: COMPONENT
 - 
