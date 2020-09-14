@@ -140,5 +140,17 @@ CHƯƠNG 6: DEVELOPMENT WORKFLOW
 - Development server @@@@@@@
 - npm install -g @vue/cli -> vue  create test
 - Cấu trúc của 1 vue project, 
-CHƯƠNG 7: COMPONENT
-- 
+CHƯƠNG 7: COMPONENT 
+-  Vue.component('test', {}) với {} giống với new Vue({}) vì component là 1 thể hiện
+    của vue instance =)). QUAN TRỌNG: data phải là 1 function trả về 1 object, chứ k phải là 1 
+    object
+- Mỗi component đều tạo ra một vùng kiểm soát riêng, với data, template và methods 
+    riêng. Nếu ta sử dụng chung 1 trong số các loại trên, có thể sẽ xảy ra lỗi.
+- Điều tương tự sẽ xảy ra với component. Ta không nên register 1 component globally
+    bằng cách Vue.component. Thay vào đó, ta lưu nó như một object:
+    components: { 'test': cmp }
+- QUAN TRỌNG: các nội dung bên trong component phải được bọc bên trong 1 div, nếu
+    không sẽ không chạy
+- cách đặt tên component: camel case
+- Giới hạn style trong 1 component: sử dụng <style scoped> ... </style>. Scoped này sẽ
+    add các style lên trên header, cùng với một style id riêng biệt cho mỗi component.

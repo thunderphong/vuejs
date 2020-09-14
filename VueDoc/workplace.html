@@ -7,9 +7,30 @@
 </head>
 <body>
     <script src="https://npmcdn.com/vue/dist/vue.js"></script>
-    
+    <div id="app">
+        <test></test>
+        <hr>
+        <test></test>
+    </div>
+
     <script>
-    
+        let cmp = {
+            data: function(){
+                return { status: 'Critical' }
+            },
+            template: '<h1> Server status: {{ status }} (<button @click="changeStatus">Change</button>)</h1>',
+            methods: {
+                changeStatus: function(){
+                    this.status = 'Normal';
+                }
+            }
+        };
+        new Vue({
+            el: '#app',
+            components: {
+                'test': cmp
+            }
+        })
     </script>
     
 </body>
