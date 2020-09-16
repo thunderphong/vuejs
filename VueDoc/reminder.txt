@@ -8,33 +8,22 @@ CHƯƠNG 1: BẮT ĐẦU
 - Cài đặt offline vuejs
 
 CHƯƠNG 2: GIAO TIẾP VỚI DOM
-- template vuejs hoạt động: copy dom đã được đánh dấu xuống thành 1 vue instance,
-    biến đổi instance đó, đẩy lên lại dom
-- template syntax và vue instance: ta không cần .this .data để trên template để 
-    truy cập vào vue instance khi muốn truy cập vào data hay methods.
-- Truy cập vào dữ liệu của chính instance: khi methods cần dữ liệu từ data, 
-    chỉ cần call this.dữ liệu.
-- v-bind:href="link" : (:) dùng để truyền giá trị từ vue instance vào 1 attribute.
-    Chỉ cần truyền bình thường như truyền vào text: {{ link }}
+- template vuejs hoạt động: copy dom đã được đánh dấu xuống thành 1 vue instance, biến đổi instance đó, đẩy lên lại dom
+- template syntax và vue instance: ta không cần .this .data để trên template để truy cập vào vue instance khi muốn truy cập vào data hay methods.
+- Truy cập vào dữ liệu của chính instance: khi methods cần dữ liệu từ data, chỉ cần call this.dữ liệu.
+- v-bind:href="link" : (:) dùng để truyền giá trị từ vue instance vào 1 attribute. Chỉ cần truyền bình thường như truyền vào text: {{ link }}
 - directive: chỉ thị cho 1 attribute
-- <v-once> Khi một {{}} hay 1 v-bind bị render nhiều hơn 1 lần, nếu ta muốn ngăn chặn việc
-    render nhiều hơn 1 lần, sử dụng v-once
+- <v-once> Khi một {{}} hay 1 v-bind bị render nhiều hơn 1 lần, nếu ta muốn ngăn chặn việc render nhiều hơn 1 lần, sử dụng v-once
 - v-html="finishedLink": output raw html như một attribute qua 1 div hoặc p
 - Link download tất cả các code và bài tập
 - Bài tập 1
-- v-on:click="increase": ngược với v-bind, v-on (@) lấy thông tin event từ element
-    sau đó gán/sửa/thay đổi dữ liệu bên trong data, methods,..
-- v-on:mouseover="changeCoordinate> {{x}} / {{y}}: sử dụng được thông qua biến 
-    event được truyền tự động qua mỗi method trong methods
-- v-on:click="increase(2, $event)": truyền đối số vào hàm sử dụng dấu ngoặc đơn,
-    nếu cần sử dụng biến event thì phải khai báo có dấu $ để vue ngầm hiểu
-- v-on:mousemove.stop: .stop được gọi là event modifier, nó điều chỉnh sự kiện
-    đứng trước một directive. phổ biến là stop(stop propagation) và prevent(default)
-- @keyup.enter="alertMe": key modifier, tức là khi thực hiện sự kiện phía trước
-    dấu . bằng phím được chain sau dấu chấm, sẽ trigger function phía sau
-- Với các trường được control bởi vue như {{  }}, function phía sau v-on, ở đó có
-    thể viết được một số code js đơn giản (k if, k loop, 1 biến, binary if). 
-    => tăng sự liên kết của html và js
+- v-on:click="increase": ngược với v-bind, v-on (@) lấy thông tin event từ element sau đó gán/sửa/thay đổi dữ liệu bên trong data, methods,..
+- v-on:mouseover="changeCoordinate> {{x}} / {{y}}: sử dụng được thông qua biến event được truyền tự động qua mỗi method trong methods
+- v-on:click="increase(2, $event)": truyền đối số vào hàm sử dụng dấu ngoặc đơn, nếu cần sử dụng biến event thì phải khai báo có dấu $ để vue ngầm hiểu
+- v-on:mousemove.stop: .stop được gọi là event modifier, nó điều chỉnh sự kiện đứng trước một directive. phổ biến là stop(stop propagation) và prevent(default)
+- @keyup.enter="alertMe": key modifier, tức là khi thực hiện sự kiện phía trước dấu . bằng phím được chain sau dấu chấm, sẽ trigger function phía sau
+- Với các trường được control bởi vue như {{  }}, function phía sau v-on, ở đó có thể viết được một số code js đơn giản (k if, k loop, 1 biến, binary if). 
+    => tăng sự liên kết của html và js 
 - v-model="name": ràng buộc 2 chiều với data là name. Với element đặt ràng buộc 2
     chiều với name, nó sẽ vừa thực hiện việc của {{ }} là hiển thị name lên element,
     vừa thay đổi name khi thay đổi giá trị bên trong nó. Như một hậu quả, các 
@@ -154,3 +143,25 @@ CHƯƠNG 7: COMPONENT
 - cách đặt tên component: camel case
 - Giới hạn style trong 1 component: sử dụng <style scoped> ... </style>. Scoped này sẽ
     add các style lên trên header, cùng với một style id riêng biệt cho mỗi component.
+
+CHƯƠNG 8: GIAO TIẾP GIỮA CÁC COMPONENT
+- Truyền dữ liệu từ C cha đến C con: sử dụng props
+    1. C cha tạo ra data function, các methods liên quan.
+    2. Trên template, C cha truyền data cần truyền thành value của 1 :st
+    3. Ở C con, trong script phải khai báo data đã nhận thông qua template bằng props
+    4. Khai báo lên template con bằng {{ st }}.
+    Nên đặt tên không viết hoa cho các data và tên attribute được truyền
+- biến nằm trong props có thể sử dụng như 1 data bình thường, tức là có thể gọi bằng this
+- Để đảm bảo giá trị props nhận được, ta nên validate nó tại props: 
+    ten: { type: String, default: 'aaax'/required: true}
+- Truyền dữ liệu từ C con lên C cha:'
+    1. this.$emit('nameWasReset', this.ten) (đặt nó bên trong 1 methods)
+    2. @nameWasReset="name = $event" (name là biến data được tạo sẵn, $event là giá trị passed)
+- Thay vì sử dụng emit và event để đưa dữ liệu lên C cha, ta có thể tạo callback ở C cha và truyền callback đó thông qua props xuống C con
+    để thực thi.
+- Truyền dữ liệu giữa 2 C con với nhau: có 3 cách
+    1. $emit and $event
+    2. callback in C cha
+    3. eventBus: Tạo biến để lưu dữ liệu trao đổi ở cả 2 C -> tạo một vue instance mới ở file khác -> import vue instance đó vào 2 C (eventBus)
+        -> sử dụng eventBus.$emit('ten', giaTri) để đưa lên eventBus. Thay vì emit thì ta có thể tạo 1 function trên Vue mới và gọi ở đây
+        -> ở C nghe, tạo created(){ eventBus.$on((data) => {this.userAge = data} )}
