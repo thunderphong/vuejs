@@ -165,3 +165,23 @@ CHƯƠNG 8: GIAO TIẾP GIỮA CÁC COMPONENT
     3. eventBus: Tạo biến để lưu dữ liệu trao đổi ở cả 2 C -> tạo một vue instance mới ở file khác -> import vue instance đó vào 2 C (eventBus)
         -> sử dụng eventBus.$emit('ten', giaTri) để đưa lên eventBus. Thay vì emit thì ta có thể tạo 1 function trên Vue mới và gọi ở đây
         -> ở C nghe, tạo created(){ eventBus.$on((data) => {this.userAge = data} )}
+- Bài tập cuối chương:
+    + Khi pass 1 object lên eventBus, hoặc từ C cha cho C con, vì đó là pass địa chỉ, nên nếu sửa nó sẽ sửa luôn object gốc
+
+CHƯƠNG 9: COMPONENT NÂNG CAO
+- Cách nào để pass content cho C con từ bên ngoài: slot
+- <slot></slot>: đặt content ở C cha (<h2>ANC</h2>), ở C con đặt tag slot => Dữ liệu từ C cha đã chuyển sang C con
+- Với data từ C cha, ta có thể thêm bất cứ directive hay data từ cha vào.
+- <p slot="content">A wonderful quote</p> <=> <slot name="content"></slot>: Khi cần nhiều slot ở C con, ta đặt tên phần tử truyền slot trên 
+    C cha
+- Default slot: là content từ C cha mà không đặt slot, vue sẽ tự động cho nố là default slot và điền nó vào bất cứ slot tag nào ở content
+    mà không có name
+- <slot name="subtitle"> Subtitle </slot>: Slot value default là content default ở C con, bên trong 2 tag slot, khi mà slot đó không được
+    pass giá trị từ C cha
+- <component :is="selectedComponent"><h2 slot="title">{{ quoteTitle }}</h2></component>: từ khóa :is trong tag component dùng để thay đổi
+    các component bên trong 1 vùng đã chọn. Bên trong 2 tag component là content đã được slot="xyz" cho các C con nếu nó có name="xyz". Giá
+    trị của :is là string tên của 1 component
+- Thực tế, khi ta cho component tùy biến với key binding :is, mỗi khi thay đổi component là mỗi lần component đó sinh ra và component trước
+    bị destroyed. Vì vậy, nếu ta muốn giữ lại trạng thái của component cũ khi :is thay đổi qua component khác, ta bọc tag keep-alive bên ngoài
+    tag component
+- activated() và deactivated(): 2 lifecycle hook ta có thể sử dụng để chèn code vào mỗi khi component bị thay đổi trong :is
