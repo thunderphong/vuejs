@@ -156,7 +156,7 @@ CHƯƠNG 8: GIAO TIẾP GIỮA CÁC COMPONENT
     ten: { type: String, default: 'aaax'/required: true}
 - Truyền dữ liệu từ C con lên C cha:'
     1. this.$emit('nameWasReset', this.ten) (đặt nó bên trong 1 methods)
-    2. @nameWasReset="name = $event" (name là biến data được tạo sẵn, $event là giá trị passed)
+    2. @nameWasReset="name = $event" :đặt bên trong tag C con (name là biến data được tạo sẵn, $event biến vue tạo, là giá trị passed)
 - Thay vì sử dụng emit và event để đưa dữ liệu lên C cha, ta có thể tạo callback ở C cha và truyền callback đó thông qua props xuống C con
     để thực thi.
 - Truyền dữ liệu giữa 2 C con với nhau: có 3 cách
@@ -185,3 +185,6 @@ CHƯƠNG 9: COMPONENT NÂNG CAO
     bị destroyed. Vì vậy, nếu ta muốn giữ lại trạng thái của component cũ khi :is thay đổi qua component khác, ta bọc tag keep-alive bên ngoài
     tag component
 - activated() và deactivated(): 2 lifecycle hook ta có thể sử dụng để chèn code vào mỗi khi component bị thay đổi trong :is
+- Bài tập chương: Props vs Slot: Slotf chỉ có thể directly chuyển dl, nên C con không cần (k thể) khai báo biến chứa. Ngược lại props cần 
+    C con phải khai báo, nhưng bù lại nó có thể làm mọi thứ với dữ liệu (tính toán,..)
+

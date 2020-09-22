@@ -1,38 +1,22 @@
 <template>
-    <div>
-        <div class="title">
-            <slot name="title"></slot>
-            <span><slot name="subtitle"> Subtitle </slot></span>
-        </div>
-        <div>
-            <slot></slot>
-        </div> 
-        
-    </div>    
-    
+    <div class="card mr-4 btn btn-outline-secondary btn-lg" type="button" @click="deleteQ">
+        <slot name="quoteSentence"></slot>
+    </div>
 </template>
 
 <script>
 export default {
-    activated(){
-        console.log('Activated');
-    },
-    deactivated(){
-        console.log('Deactivated');
+    methods: {
+        deleteQ(){
+            this.$emit('deleteMe', undefined)
+        }
     }
-}
+};
 </script>
 
 <style scoped>
-    div {
-        border: 1px solid blue;
-        box-shadow: 1px 1px 2px black;
-        padding: 30px;
-        margin: 30px auto;
-        text-align: center;
-    }
-    h2 { color: red }
-    .title {
-        font-style: italic;
+    * {
+        font-family:'Arizonia', 'Arial Narrow', Arial, sans-serif;
+        font-size: 40px
     }
 </style>
