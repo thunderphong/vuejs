@@ -37,9 +37,18 @@ CHƯƠNG 2: GIAO TIẾP VỚI DOM
         => cần có dấu () khi ở trong {{}}
 - {{ me() }}methods cần phải có dấu () khi ở bên trong {{}}. Khi được chỉ định ở
     v-on thì không cần phải có dấu (), mặc dù có cũng k sao
+- watch: là 1 methods được trigger ngay khi data cùng tên thay đổi giá trị. Mặc định, 1 function watch có sẵn 2 argument value chứa giá trị 
+    tức thời và giá trị trước khi thay đổi mà value đó có
 - watch: { counter: function(value){async code} }: watch là 1 property của Vue 
     dùng để thực hiện những tác vụ async KHI VÀ CHỈ KHI biến bên trong data được
     chỉ định (counter) bị thay đổi
+- COMPUTED VS WATCHER:
+    + COMPUTED: xuất 1/nhiều dữ liệu ra html một cách linh động
+    + WATCHER: sử dụng khi có gì đó thay đổi, và cần thiết phải thay đổi giá trị của 1 property
+- METHODS VS COMPUTED VS WATCHER:
+    - methods: event-binding
+    - computed: data-binding
+    - watcher: non-data update
 - Bài tập: watch có thể theo dõi được cả Computed, do Computed được treat như 1 
     biến data 
 - @click:"attachRed = !attachRed", :class="{red:attachRed}": dynamic styling các 
@@ -98,8 +107,8 @@ CHƯƠNG 5: VUE INSTANCE
     và sự khác biệt khi add property bên ngoài instance. 
 - ta có thể tạo 1 data value bên ngoài và gán nó vào 1 data property bên trong.
     Hoàn toàn hợp lệ. 
-- this.$ref.'tên gán'.innerText / vm1.$ref.'tên gán'.innerText: là thứ ta có thể 
-    truy cập vào nội dụng của một tag đã được gán thẻ ref.
+
+- <input ref="a"> - this.$ref.a.value / vm1.$ref.a.value: là nơi lưu nội dụng của một tag đã được gán thẻ ref.
 - https://vi.vuejs.org/v2/api/: api
 - vm1.$mount('#app1') = new Vue({el: '#app1'}), chỉ khác là trong và ngoài
 - Một cách khác để giải thích cách vue instance hoạt động: vm3.$mount();
@@ -120,11 +129,11 @@ CHƯƠNG 5: VUE INSTANCE
         2. Khởi tạo data và event (methods, computed), tạo ra instance -> created()
         3. Tìm el/template -> Biên dịch template đã có / Biên dịch outerHTML của el 
             (gán giá trị của data vào instance, thêm directive) -> beforeMount()
-        4. Tạo vm.$el (?) và thay thế cho el -> mounted()
-        5. Thay thế instance lên dom -> beforeUpdate()
-        6. (điều kiện dom phải thay đổi) Virtual Dom và render lại -> updated()
-        7. (điều kiện vm.destroy() được gọi) -> beforeDestroy()
-        8. Tháo dỡ các watcher, eventListener, code,... -> destroyed().
+        4. Thay thế instance lên dom -> mounted()
+        5. Khi dom thay đổi -> beforeUpdate()
+        6. Virtual Dom và render lại -> updated()
+        7. (điều kiện vm.destroy() được gọi) -> beforeDestroy() / beforeUnmount
+        8. Tháo dỡ các watcher, eventListener, code,... -> destroyed() / mounted.
 CHƯƠNG 6: DEVELOPMENT WORKFLOW
 - Development server @@@@@@@
 - npm install -g @vue/cli -> vue  create test
@@ -152,6 +161,7 @@ CHƯƠNG 8: GIAO TIẾP GIỮA CÁC COMPONENT
     4. Khai báo lên template con bằng {{ st }}.
     Nên đặt tên không viết hoa cho các data và tên attribute được truyền
 - biến nằm trong props có thể sử dụng như 1 data bình thường, tức là có thể gọi bằng this
+- Dynamic binding 1 props từ phía cha: sử dụng :name="dynamicData"
 - Để đảm bảo giá trị props nhận được, ta nên validate nó tại props: 
     ten: { type: String, default: 'aaax'/required: true}
 - Truyền dữ liệu từ C con lên C cha:'
@@ -165,6 +175,11 @@ CHƯƠNG 8: GIAO TIẾP GIỮA CÁC COMPONENT
     3. eventBus: Tạo biến để lưu dữ liệu trao đổi ở cả 2 C -> tạo một vue instance mới ở file khác -> import vue instance đó vào 2 C (eventBus)
         -> sử dụng eventBus.$emit('ten', giaTri) để đưa lên eventBus. Thay vì emit thì ta có thể tạo 1 function trên Vue mới và gọi ở đây
         -> ở C nghe, tạo created(){ eventBus.$on((data) => {this.userAge = data} )}
+- provide(){return {...}} Truyền dữ liệu từ tổ tiên xuống con cháu (2 tầng parent trở lên): sử dụng provide - inject. 
+    Cú pháp ở phía con cháu tương tự như props.
+- Ngược lại, khi truyền dữ liệu, đặc biệt là custom event từ con cháu lên ông bà, ta có thể vẫn sử dụng provide và inject. Bằng cách là 
+    viết sẫn function ở C ông bà, sau đó tạo 1 biến bên trong provide và point nó đến reference của function vừa tạo. Ở C con cháu sẽ nhận
+    nó ở inject và sử dụng nó bình thường. Không lạm dụng nếu như không có code fall through 2 - 3 C.
 - Bài tập cuối chương:
     + Khi pass 1 object lên eventBus, hoặc từ C cha cho C con, vì đó là pass địa chỉ, nên nếu sửa nó sẽ sửa luôn object gốc
 
@@ -172,19 +187,21 @@ CHƯƠNG 9: COMPONENT NÂNG CAO
 - Cách nào để pass content cho C con từ bên ngoài: slot
 - <slot></slot>: đặt content ở C cha (<h2>ANC</h2>), ở C con đặt tag slot => Dữ liệu từ C cha đã chuyển sang C con
 - Với data từ C cha, ta có thể thêm bất cứ directive hay data từ cha vào.
-- <p slot="content">A wonderful quote</p> <=> <slot name="content"></slot>: Khi cần nhiều slot ở C con, ta đặt tên phần tử truyền slot trên 
-    C cha
+- (C cha) <template v-slot:content></template> / (C con) <slot name="content"></slot>: Khi cần nhiều slot ở C con, 
+    ta sử dụng directive mới là v-slot cho C cha, bọc bên ngoài 1 template. v-slot shorthand syntax là #
 - Default slot: là content từ C cha mà không đặt slot, vue sẽ tự động cho nố là default slot và điền nó vào bất cứ slot tag nào ở content
     mà không có name
 - <slot name="subtitle"> Subtitle </slot>: Slot value default là content default ở C con, bên trong 2 tag slot, khi mà slot đó không được
     pass giá trị từ C cha
-- <component :is="selectedComponent"><h2 slot="title">{{ quoteTitle }}</h2></component>: từ khóa :is trong tag component dùng để thay đổi
-    các component bên trong 1 vùng đã chọn. Bên trong 2 tag component là content đã được slot="xyz" cho các C con nếu nó có name="xyz". Giá
-    trị của :is là string tên của 1 component
+- <component :is="selectedComponent"><template v-slot:xyz><h2>{{ quoteTitle }}</h2></template></component>: từ khóa :is trong tag component 
+    dùng để thay đổi các component bên trong 1 vùng đã chọn. Bên trong 2 tag component là content đã được v-slot:xyz cho các C con 
+    nếu nó có name="xyz". Giá trị của :is là string tên của 1 component
 - Thực tế, khi ta cho component tùy biến với key binding :is, mỗi khi thay đổi component là mỗi lần component đó sinh ra và component trước
     bị destroyed. Vì vậy, nếu ta muốn giữ lại trạng thái của component cũ khi :is thay đổi qua component khác, ta bọc tag keep-alive bên ngoài
     tag component
 - activated() và deactivated(): 2 lifecycle hook ta có thể sử dụng để chèn code vào mỗi khi component bị thay đổi trong :is
-- Bài tập chương: Props vs Slot: Slotf chỉ có thể directly chuyển dl, nên C con không cần (k thể) khai báo biến chứa. Ngược lại props cần 
+- Bài tập chương: PROPS vs SLOT: Slotf chỉ có thể directly chuyển dl, nên C con không cần (k thể) khai báo biến chứa. Ngược lại props cần 
     C con phải khai báo, nhưng bù lại nó có thể làm mọi thứ với dữ liệu (tính toán,..)
-
+- <teleport to="body">---1 component---</teleport> tag teleport dùng để quy định cho vue component bên trong nó được render ở đâu, bằng
+    parameter to=..
+- 
